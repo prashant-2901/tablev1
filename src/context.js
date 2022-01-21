@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export const addContact = (payload) => {
   return {
     type: "add",
@@ -20,11 +22,31 @@ export const updateContact = (payload) => {
 };
 
 export const getContactsInit = () => {
-  return {
-    type: "InitContact",
+  return (dispatch) => {
+    axios
+      .get("http://localhost:8000/data")
+      .then((response) => {
+        const users = response.data;
+        console.log("getcontactsinit", response.data);
+        dispatch(fetchUsersSuccess(users));
+      })
+      .catch((error) => {
+        const errorMsg = error.message;
+        dispatch(fetchUsersFailure(errorMsg));
+      });
   };
-  //Todo implement thunk
 };
 
-// getContactsSuccess;
-// getContactsError;
+const fetchUsersSuccess = (users) => {
+  return {
+    type: "Success",
+    payload: users,
+  };
+};
+
+const fetchUsersFailure = (error) => {
+  return {
+    type: "Failure",
+    payload: error,
+  };
+};
