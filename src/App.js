@@ -17,6 +17,7 @@ import {
 const App = () => {
   const counter = useSelector((state) => state.counter);
   const contacts = useSelector((state) => state.contacts);
+  console.log("app.js", typeof contacts[0]);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -62,7 +63,8 @@ const App = () => {
       phone: addFormData.phone,
       email: addFormData.email,
     };
-    dispatch(addContact(newContact));
+    console.log([newContact]);
+    dispatch(addContact([newContact]));
   };
   const handleEditFormSubmit = (event) => {
     event.preventDefault();
