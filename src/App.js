@@ -17,7 +17,7 @@ import {
 const App = () => {
   const counter = useSelector((state) => state.counter);
   const contacts = useSelector((state) => state.contacts);
-  console.log("app.js", typeof contacts[0]);
+  console.log("app.js", contacts);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -63,8 +63,8 @@ const App = () => {
       phone: addFormData.phone,
       email: addFormData.email,
     };
-    console.log([newContact]);
-    dispatch(addContact([newContact]));
+    console.log(newContact);
+    dispatch(addContact(newContact));
   };
   const handleEditFormSubmit = (event) => {
     event.preventDefault();
@@ -95,6 +95,7 @@ const App = () => {
     setEditContactId(null);
   };
   const handleDeleteClick = (contactId) => {
+    console.log({ id: contactId });
     dispatch(deleteContact({ id: contactId }));
   };
 
@@ -107,7 +108,7 @@ const App = () => {
   // useEffect(() => {
   //   getContactInit();
   // }, []);
-
+  console.log(contacts);
   return (
     <>
       <div className="app-container">

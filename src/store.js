@@ -6,13 +6,24 @@ import axios from "axios";
 
 //state =[]
 const contactsReducer = (state = [], action) => {
+  console.log("store", action.payload);
   switch (action.type) {
     case "add":
-      //   console.log(action.payload);
-      return axios.post("http://localhost:8000/data", [
-        ...state,
-        action.payload,
-      ]);
+      // console.log(action.payload);
+      const newData = action.payload;
+      return axios
+        .post("http://localhost:8000/data", newData)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(newData);
+          console.log(data.data);
+          return data.data;
+        })
+
+        .catch((error) => {
+          console.log(error);
+        });
+
     case "update":
       //   console.log(action.payload);
       const newContacts = state?.map((contact) =>
@@ -21,10 +32,19 @@ const contactsReducer = (state = [], action) => {
       console.log(newContacts);
       return newContacts;
     case "delete":
-      return state?.filter((contact) => contact.id !== action.payload.id);
+      console.log(action.payload);
+      return axios
+        .delete(`http:localhost:8000/data/${action.payload}`)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    // return state?.filter((contact) => contact.id !== action.payload.id);
     case "Success":
       console.log("in success", action.payload);
-      return [action.payload];
+      return [...action.payload];
     case "error":
       return action.payload; //or []
 

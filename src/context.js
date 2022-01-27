@@ -8,6 +8,7 @@ export const addContact = (payload) => {
 };
 
 export const deleteContact = (payload) => {
+  console.log(payload);
   return {
     type: "delete",
     payload,
